@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Service;
+using Domain.IRepository;
+using Domain.IService;
+using EntityFrameworkCore.Repository.MongoDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +13,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Driver;
 
 namespace ControllerSystem
 {
@@ -31,7 +36,8 @@ namespace ControllerSystem
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddScoped<ILoginService, LoginService>();
+            services.AddSingleton<IDataAdapter<MongoClient>, MongoDataAdapter>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
